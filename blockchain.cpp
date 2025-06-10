@@ -9,6 +9,9 @@
 
 using namespace std;
 
+// Difficulty level (number of leading zeros required)
+const int DIFFICULTY = 4;
+
 // Get current timestamp
 string getTimestamp() {
     time_t now = time(0);
@@ -28,6 +31,11 @@ string calculateHash(const string& input) {
     return ss.str();
 }
 
+// Check if hash satisfies difficulty (starts with DIFFICULTY number of zeros)
+bool isValidHash(const string& hash) {
+    return hash.substr(0, DIFFICULTY) == string(DIFFICULTY, '0');
+}
+
 // Block class
 class Block {
 public:
@@ -36,6 +44,7 @@ public:
     string data;
     string previousHash;
     string hash;
+    int nonce;
     Block* next;
 
     Block(int idx, const string& data, const string& prevHash) {
@@ -43,20 +52,31 @@ public:
         this->data = data;
         this->previousHash = prevHash;
         this->timestamp = getTimestamp();
-        this->hash = calculateHash(toString());
+        this->nonce = 0;
+        this->hash = mineBlock();
         this->next = nullptr;
     }
 
     string toString() const {
         stringstream ss;
-        ss << index << timestamp << data << previousHash;
+        ss << index << timestamp << data << previousHash << nonce;
         return ss.str();
+    }
+
+    string mineBlock() {
+        string hashAttempt;
+        do {
+            nonce++;
+            hashAttempt = calculateHash(toString());
+        } while (!isValidHash(hashAttempt));
+        return hashAttempt;
     }
 
     void print() const {
         cout << "Index: " << index << endl;
         cout << "Timestamp: " << timestamp << endl;
         cout << "Data: " << data << endl;
+        cout << "Nonce: " << nonce << endl;
         cout << "Previous Hash: " << previousHash << endl;
         cout << "Hash: " << hash << endl;
         cout << "-------------------------------" << endl;
@@ -78,14 +98,9 @@ public:
     }
 
     void addBlock(const string& data) {
-        if (head == nullptr) {
-            head = new Block(0, data, "0");
-            tail = head;
-        } else {
-            Block* newBlock = new Block(size, data, tail->hash);
-            tail->next = newBlock;
-            tail = newBlock;
-        }
+        Block* newBlock = new Block(size, data, tail->hash);
+        tail->next = newBlock;
+        tail = newBlock;
         size++;
     }
 
@@ -108,6 +123,10 @@ public:
                 cout << "Hash mismatch at index: " << current->index << endl;
                 return false;
             }
+            if (!isValidHash(current->hash)) {
+                cout << "Block " << current->index << " does not satisfy PoW." << endl;
+                return false;
+            }
             current = current->next;
         }
         return true;
@@ -128,7 +147,7 @@ int main() {
     Blockchain chain;
     string input;
 
-    cout << "Welcome to BlockchainRxn" << endl;
+    cout << "Welcome to Node.js Blockchain CLI(with Proof of Work)" << endl;
 
     while (true) {
         cout << "\nMenu:\n";
@@ -151,8 +170,9 @@ int main() {
                 cout << "Enter transaction data: ";
                 string data;
                 getline(cin, data);
+                cout << "Mining new block... please wait.\n";
                 chain.addBlock(data);
-                cout << "Block added.\n";
+                cout << "Block mined and added.\n";
                 break;
             }
             case '2': {

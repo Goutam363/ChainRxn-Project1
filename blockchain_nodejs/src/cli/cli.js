@@ -42,7 +42,7 @@ function showMenu() {
 }
 
 function startCLI() {
-    console.log("Welcome to Node.js Blockchain CLI");
+    console.log("Welcome to Node.js Blockchain CLI(with Proof of Work)");
     showMenu();
 }
 
