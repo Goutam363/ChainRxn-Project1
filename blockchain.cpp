@@ -72,9 +72,9 @@ private:
 
 public:
     Blockchain() {
-        head = nullptr;
-        tail = nullptr;
-        size = 0;
+        head = new Block(0, "Genesis Block", "0");
+        tail = head;
+        size = 1;
     }
 
     void addBlock(const string& data) {
@@ -156,7 +156,7 @@ int main() {
                 break;
             }
             case '2': {
-                cout << "Blockchain:\n";
+                cout << "\nBlockchain:\n";
                 chain.printChain();
                 break;
             }
