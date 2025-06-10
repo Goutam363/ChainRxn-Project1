@@ -1,99 +1,111 @@
-# Chain Rxn - Build Your Own Blockchain
+# Chain Rxn - My Blockchain
 
-Welcome to Project 1 of **Chain Rxn** (BIB Summer Bootcamp)!
+Welcome to my implementation of **Project 1** from the **Chain Rxn - BIB Summer Bootcamp**. The goal of this project is to understand and build a simple blockchain from scratch, including:
 
-In this project, you’ll build a simple **blockchain from scratch** to understand how blocks, hashes, and chain validation work under the hood. You’re free to use **any programming language** you’re comfortable with (C, Python, JavaScript, etc.).
+* Block creation
+* Hashing logic
+* Blockchain integrity validation
 
 ---
 
-## Getting Started
+## Project Overview
 
-Follow these steps carefully. This guide assumes **no prior experience with GitHub**, so take it slow and read everything.
+Initially, I implemented the blockchain in **C++** to get hands-on with data structures and low-level memory management. However, to better support future stages such as:
 
-### Step 1: Fork This Repository
+* Connecting the blockchain to **REST APIs**
+* Simulating a **Bitcoin node** with P2P networking
 
-1. Click the **Fork** button at the top-right of this page.
-2. A copy of this repository will be created in your own GitHub account.
-3. Clone it to your local system using this command (replace `your-username`):
+I decided to create a **modular and scalable version in Node.js** as well.
 
-```bash
-git clone https://github.com/your-username/ChainRxn-Project1
+---
+
+## Project Structure
+
 ```
-## 🧩 Task Overview
-This project involves writing code to simulate a basic blockchain.
-
-### Requirements:
-- Create a **Block** structure/class with the following:
-  - Index (block number)
-  - Timestamp
-  - Data (message or transaction)
-  - Previous block’s hash
-  - Current block’s hash (can use a simple/fake hash)
-
-- Create a **Blockchain** class or logic that:
-  - Starts with a **Genesis block**
-  - Adds new blocks
-  - Validates the integrity of the chain (check for tampering)
-
-### Optional:
-- Add Proof of Work or mining mechanism for added complexity.
+.
+├── blockchain.cpp                # C++ version of blockchain
+├── blockchain_nodejs/           # Node.js version
+│   ├── index.js
+│   ├── package.json
+│   └── src/
+│       ├── blockchain/
+│       │   ├── Block.js
+│       │   ├── Blockchain.js
+│       │   └── index.js
+│       ├── cli/
+│       │   └── cli.js
+│       └── utils/
+│           └── hash.js
+```
 
 ---
 
-## 🚀 How to Run
+## C++ Blockchain
 
-### If using C:
+### Dependencies
+
+* C++11 or higher
+* `g++` compiler
+
+### Setup
+
+Install dependencies:
+
 ```bash
-gcc blockchain.c -o blockchain
+sudo apt install libssl-dev
+```
+
+### Compile and Run
+
+```bash
+g++ blockchain.cpp -o blockchain -lssl -lcrypto
 ./blockchain
 ```
-If using another language:
-- Follow the normal run commands for that language.
 
-- Add instructions in your own `README.md`
+This will launch a user-interactive CLI where you can:
 
-# 🚀 Pushing Changes to GitHub
+* Add new blocks with transaction data
+* Print the entire blockchain
+* Validate the integrity of the chain
 
-After completing your implementation:
+---
+
+## Node.js Blockchain (Recommended for API + P2P)
+
+### Located in: `blockchain_nodejs/`
+
+### Setup
+
+Install dependencies:
 
 ```bash
-git add .
-git commit -m "Completed my blockchain implementation"
-git push origin main
+cd blockchain_nodejs
+npm install
 ```
 
-> Replace `main` with `master` if your branch is named differently.
+### Run the Blockchain CLI
 
-✅ **Verify your changes** are visible on your GitHub repository.
+```bash
+npm run start
+```
 
----
+This will launch a user-interactive CLI where you can:
 
-# 📤 Submitting Your Solution
-
-Once ready and pushed:
-
-1. Fill out the submission [Google Form](https://forms.gle/psN24KRMsGUbGTGP6).
-2. Provide your:
-
-   * **Full Name**
-   * **Email ID**
-   * **GitHub repo link** (e.g., `https://github.com/your-username/ChainRxn-Project1`)
-3. Click **Submit**.
+* Add new blocks with transaction data
+* Print the entire blockchain
+* Validate the integrity of the chain
 
 ---
 
-# 🕒 Deadline
+## Credits
 
-Submit your solution by: **15th June' 25 (EOD)**
+This project is developed as part of the **Chain Rxn - BIB Summer Bootcamp 2025**.
 
 ---
 
-# 🏁 Final Tips
+## Contact
 
-* Keep your code **simple and clear**.
-* Focus on **understanding blockchain concepts**, not just coding.
-* Document your code with comments or add a small `README.md` inside your repo.
-* Try not using AI.
-
-We look forward to seeing your first blockchain! 🚀
-
+**Goutam Halder**
+M.Tech CSE, IIT Bhilai
+Email: [goutamhalder@iitbhilai.ac.in](mailto:goutamhalder@iitbhilai.ac.in)
+GitHub: [@goutam363](https://github.com/goutam363)
